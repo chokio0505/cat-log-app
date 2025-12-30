@@ -39,7 +39,7 @@ export const InputModal = ({ isOpen, onClose, onSave }: Props) => {
       background: 'rgba(0,0,0,0.5)', zIndex: 100,
       display: 'flex', alignItems: 'flex-end', justifyContent: 'center'
     }} onClick={onClose}>
-      
+
       {/* モーダル本体（下からニョキッと出るアニメーション） */}
       <motion.div
         initial={{ y: "100%" }}
@@ -90,7 +90,7 @@ export const InputModal = ({ isOpen, onClose, onSave }: Props) => {
             type="number"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            style={{ width: '100%', padding: '15px', fontSize: '1.2rem', borderRadius: '8px', border: '1px solid #ddd' }}
+            style={{ width: '100%', padding: '15px', fontSize: '1.2rem', borderRadius: '8px', border: '1px solid #ddd', boxSizing: 'border-box' }}
             placeholder="例: 30"
           />
         </div>
@@ -102,7 +102,7 @@ export const InputModal = ({ isOpen, onClose, onSave }: Props) => {
             type="text"
             value={memo}
             onChange={(e) => setMemo(e.target.value)}
-            style={{ width: '100%', padding: '15px', borderRadius: '8px', border: '1px solid #ddd' }}
+            style={{ width: '100%', padding: '15px', borderRadius: '8px', border: '1px solid #ddd', boxSizing: 'border-box' }}
             placeholder="よく食べた"
           />
         </div>

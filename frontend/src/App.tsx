@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 // Framer Motion をインポート
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion'
-import { Plus } from 'lucide-react'
+import { Plus, Trash2 } from 'lucide-react'
 import { InputModal } from './components/InputModal'
 // APIのURL（環境に合わせて変更してください）
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
@@ -80,48 +80,59 @@ function App() {
           {records.map((record) => (
             <motion.div
               key={record.id}
-              // 横方向(x)のみドラッグ可能にする
-              drag="x"
-              // ドラッグの制約（左には動くが、右には行かせない等）
-              dragConstraints={{ left: 0, right: 0 }}
-              // 指を離した時にバネのように戻る設定
-              dragElastic={{ left: 0.7, right: 0.1 }}
-              // スワイプ終了時の処理
-              onDragEnd={(e, info) => handleDragEnd(e, info, record.id)}
-              // 消える時のアニメーション
-              exit={{ opacity: 0, height: 0, marginTop: 0, marginBottom: 0 }}
-              // スタイル
-              style={{
-                background: 'white',
-                padding: '20px',
-                borderRadius: '12px',
-                boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-                position: 'relative', // 重要
-                touchAction: 'pan-y' // 縦スクロールを邪魔しない設定
-              }}
-              // 左にスワイプしている時に「削除」の赤色を裏に見せる演出などのため
-              whileDrag={{ scale: 1.02, zIndex: 10 }}
+              layout
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              style={{ marginBottom: 10, position: 'relative', overflow: 'hidden', borderRadius: '12px' }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontWeight: 'bold' }}>{record.record_type}</span>
-                <span>{record.value}</span>
-              </div>
-
-              {/* スワイプを促すヒント（削除アイコンなどを絶対配置で入れても良い） */}
+              {/* 背景の削除ボタン（スワイプで見えるようになる） */}
               <div style={{
                 position: 'absolute',
-                right: -80,
-                top: 0,
-                bottom: 0,
-                width: 80,
+                top: 0, bottom: 0, left: 0, right: 0,
+                background: '#ff4d4f', // Red
+                // borderRadius: '12px', // 親のoverflow:hiddenで切り抜くため削除
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                color: 'red',
-                fontWeight: 'bold'
+                justifyContent: 'flex-end',
+                paddingRight: '20px',
+                color: 'white',
+                zIndex: 0
               }}>
-                削除
+                <Trash2 size={24} />
               </div>
+
+              {/* コンテンツ本体（スワイプ可能） */}
+              <motion.div
+                // 横方向(x)のみドラッグ可能
+                drag="x"
+                // ドラッグの制約（左には動くが、右には行かせない）
+                dragConstraints={{ left: 0, right: 0 }}
+                // 指を離した時にバネのように戻る設定
+                dragElastic={{ left: 0.7, right: 0.1 }}
+                // スワイプ終了時の処理
+                onDragEnd={(e, info) => handleDragEnd(e, info, record.id)}
+                // スタイル
+                style={{
+                  background: 'white',
+                  padding: '20px',
+                  borderRadius: '12px',
+                  boxShadow: '0 0 0 1px white, 0 2px 5px rgba(0,0,0,0.05)',
+                  position: 'relative', // 背景の上に表示
+                  zIndex: 1,
+                  display: 'flex', // コンテンツのレイアウト
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  touchAction: 'pan-y'
+                }}
+                whileDrag={{ cursor: 'grabbing' }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                  <span style={{ fontWeight: 'bold' }}>{record.record_type}</span>
+                  <span>{record.value}</span>
+                </div>
+              </motion.div>
             </motion.div>
           ))}
         </AnimatePresence>

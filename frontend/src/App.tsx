@@ -5,7 +5,7 @@ import { motion, AnimatePresence, type PanInfo } from 'framer-motion'
 import { Plus } from 'lucide-react'
 import { InputModal } from './components/InputModal'
 // APIのURL（環境に合わせて変更してください）
-const API_URL = 'http://localhost:3000/records'
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/records'
 
 // 型定義
 type Record = {
@@ -35,7 +35,7 @@ function App() {
   const handleDelete = async (id: number) => {
     // 画面から先に消す（楽観的UI）
     setRecords(prev => prev.filter(r => r.id !== id))
-    
+
     try {
       await axios.delete(`${API_URL}/${id}`)
       console.log('Deleted!')
@@ -105,16 +105,16 @@ function App() {
                 <span style={{ fontWeight: 'bold' }}>{record.record_type}</span>
                 <span>{record.value}</span>
               </div>
-              
+
               {/* スワイプを促すヒント（削除アイコンなどを絶対配置で入れても良い） */}
-              <div style={{ 
-                position: 'absolute', 
-                right: -80, 
-                top: 0, 
-                bottom: 0, 
-                width: 80, 
-                display: 'flex', 
-                alignItems: 'center', 
+              <div style={{
+                position: 'absolute',
+                right: -80,
+                top: 0,
+                bottom: 0,
+                width: 80,
+                display: 'flex',
+                alignItems: 'center',
                 justifyContent: 'center',
                 color: 'red',
                 fontWeight: 'bold'

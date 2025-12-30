@@ -1,0 +1,12 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  margin: 0;
+  /* スワイプ時のバウンス防止と選択無効化 */
+  overscroll-behavior-y: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  background-color: #f5f5f5;
+}

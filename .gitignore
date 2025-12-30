@@ -1,0 +1,15 @@
+# cat-log-project/.gitignore
+
+# --- OS generated ---
+.DS_Store
+Thumbs.db
+
+# --- Editor / IDE ---
+.idea/
+.vscode/
+*.swp
+*~
+
+# --- Security (念のため全体でもガード) ---
+.env
+node_modules

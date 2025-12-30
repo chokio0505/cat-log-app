@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cat: one
+  record_type: 1
+  value: 1.5
+  memo: MyText
+  recorded_at: 2025-12-29 18:01:48
+
+two:
+  cat: two
+  record_type: 1
+  value: 1.5
+  memo: MyText
+  recorded_at: 2025-12-29 18:01:48

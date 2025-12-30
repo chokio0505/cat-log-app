@@ -5,7 +5,8 @@ import { motion, AnimatePresence, type PanInfo } from 'framer-motion'
 import { Plus } from 'lucide-react'
 import { InputModal } from './components/InputModal'
 // APIのURL（環境に合わせて変更してください）
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/records'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+const API_URL = `${API_BASE_URL}/records`
 
 // 型定義
 type Record = {
